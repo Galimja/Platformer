@@ -10,12 +10,15 @@ namespace PlatformerMVC
         [SerializeField] private InteractiveObjectView _playerView;
         [SerializeField] private CanonView _canonView;
         [SerializeField] private LevelObjectView _cameraView;
-        [SerializeField] private InteractiveEnemyObjectview _octopusView;
-        [SerializeField] private PlatformPatrolObjectView _crabView;
+        [SerializeField] private LevelObjectView[] _enemiesView;
         [SerializeField] private GeneratorLevelView _generatorLevelView;
         [SerializeField] private QuestView _questView;
         [SerializeField] private CoinsCollectView _coinsCollectView;
         [SerializeField] private CaveZoneView _caveZoneView;
+
+        [SerializeField] private PauseMenuView _pauseMenuView;
+        [SerializeField] private PlayerUIView _playerUIView;
+        [SerializeField] private GameOverMenuView _gameOverMenuView;
         //[SerializeField] private QuestObjectView _singleQuestItemView; 
 
 
@@ -23,22 +26,40 @@ namespace PlatformerMVC
         private CanonController _canonController;
         private EmitterController _emitterController;
         private CameraController _cameraController;
-        private OctopusController _octopusController;
-        private CrabController _crabController;
         private GeneratorController _generatorController;
         private QuestConfiguratorController _questConfiguratorController;
         private CoinCollectController _collectController;
         private CaveZoneController _caveZoneController;
+
+        private PauseMenuController _pauseMenuController;
+
+        private List<OctopusController> _octopusController = new List<OctopusController>();
+        private List<CrabController> _crabController = new List<CrabController>();
+
         //private QuestController _questController;
 
         private void Awake()
         {
-            _playerController = new PlayerController(_playerView);
+
+            _playerController = new PlayerController(_playerView, _playerUIView, _gameOverMenuView);
             _canonController = new CanonController(_canonView._muzzleT, _playerView._transform);
             _emitterController = new EmitterController(_canonView._bullets ,_canonView._emitterT);
             _cameraController = new CameraController(_playerView, _cameraView._transform);
-            _octopusController = new OctopusController(_octopusView);
-            _crabController = new CrabController(_crabView, _playerView._transform);
+            _pauseMenuController = new PauseMenuController(_pauseMenuView);
+
+            for (int i = 0; i < _enemiesView.Length; i++)
+            {
+                if (_enemiesView[i] is InteractiveEnemyObjectview)
+                {
+                    _octopusController.Add(new OctopusController((InteractiveEnemyObjectview)_enemiesView[i]));
+                }
+                else if (_enemiesView[i] is PlatformPatrolObjectView)
+                {
+                    _crabController
+                    .Add(new CrabController((PlatformPatrolObjectView)_enemiesView[i], _playerView._transform));
+                }
+            }
+
             //_generatorController = new GeneratorController(_generatorLevelView);
             //_generatorController.Start();
 
@@ -56,9 +77,18 @@ namespace PlatformerMVC
             _canonController.Update();
             _emitterController.Update();
             _cameraController.Update();
-            _octopusController.Update();
-            _crabController.Update();
             _collectController.Update();
+
+            for (int i = 0; i < _octopusController.Count; i++)
+            {
+                _octopusController[i].Update();
+            }
+
+            for (int i = 0; i < _crabController.Count; i++)
+            {
+                _crabController[i].Update();
+            }
+
         }
     }
 }

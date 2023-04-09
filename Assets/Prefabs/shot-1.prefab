@@ -140,3 +140,4 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 4772331153160238129}
   _rb: {fileID: 6679399902033743241}
   _collider: {fileID: 6264247288954325975}
+  _damagePoint: 10

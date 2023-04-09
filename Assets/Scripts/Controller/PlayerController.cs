@@ -1,22 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace PlatformerMVC
 {
-    public class PlayerController
+    public class PlayerController : IDisposable
     {
         private AnimationConfig _config;
         private SpriteAnimatorController _playerAnimator;
         private ContactPooler _contactPooler;
+
         private InteractiveObjectView _playerView;
+        private PlayerUIView _playerUIView;
+        private GameOverMenuView _gameOverMenuView;
+
         private PlayerEmitterController _playerEmitter;
         
         private Transform _playerT;
         private Rigidbody2D _rb;
 
-        private int _health = 100;
+        private int _health = 5;
         
+        private bool _isDead = false;
         private bool _isJump;
         private bool _isMoving;
         private bool _isDuck;
@@ -39,12 +44,18 @@ namespace PlatformerMVC
         private float _yVelocity = 0;
         private float _xVelocity = 0;
 
+        private float _hurtTime;
+        private float _hurtDelay = 1.5f;
 
-        public PlayerController(InteractiveObjectView player)
+        public PlayerController(InteractiveObjectView player, PlayerUIView uiView, GameOverMenuView gameOverView)
         {
             _playerView = player;
+            _playerUIView = uiView;
             _playerT = player._transform;
             _rb = player._rb;
+
+            _gameOverMenuView = gameOverView;
+            _gameOverMenuView.Init(ResetLevel);
 
             _config = Resources.Load<AnimationConfig>("SpriteAnimCfg");
             _playerAnimator = new SpriteAnimatorController(_config);
@@ -53,16 +64,26 @@ namespace PlatformerMVC
 
             _playerEmitter = new PlayerEmitterController(player._bullets, player._muzzleT);
 
-            _playerView.TakeDamage += TakeBullet;
+            _playerView.TakeDamage += TakeDamage;
         }
 
-        public void TakeBullet(BulletView bullet)
+        private void ResetLevel()
         {
-            _health -= bullet.DamagePoint;
-            _isHurt = true;
-            
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        public void TakeDamage()
+        {
+            if (_hurtTime < 0.02f)
+            {
+                _health--;
+                _isHurt = true;
+                _playerUIView._heartImages[_health].SetActive(false);
+                Debug.Log(_health);
+            }
+
             //_playerAnimator.StartAnimation(_playerView._spriteRenderer, AnimState.hurt, true, _animationSpeed / 10);
-            Debug.Log(_health);
         }
 
         private void MoveTowards()
@@ -77,7 +98,24 @@ namespace PlatformerMVC
             if (_health <= 0)
             {
                 _health = 0;
-                _playerView._spriteRenderer.enabled = false;
+
+                if (!_isDead)
+                    GameOver();
+            }
+
+            if (_playerT.position.y < -25f)
+            {
+                if (!_isDead)
+                    GameOver();
+            }
+
+            if (_isHurt) { 
+                _hurtTime += Time.deltaTime;
+                if (_hurtTime - _hurtDelay > 0f)
+                {
+                    _isHurt = false;
+                    _hurtTime = 0f;
+                }
             }
 
             _playerAnimator.Update();
@@ -154,9 +192,18 @@ namespace PlatformerMVC
             
         }
 
+        private void GameOver()
+        {
+            _isDead = true;
+            _playerView._spriteRenderer.enabled = false;
+            Time.timeScale = 0f;
+            _gameOverMenuView.gameObject.SetActive(true);
+        }
 
-
-
-
+        public void Dispose()
+        {
+            ((IDisposable)_playerAnimator).Dispose();
+            _playerView.TakeDamage -= TakeDamage;
+        }
     }
 }

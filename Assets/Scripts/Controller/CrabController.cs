@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PlatformerMVC
 {
-    public class CrabController 
+    public class CrabController : IEnemy
     {
         private AnimationConfig _config;
         private SpriteAnimatorController _crabAnimator;

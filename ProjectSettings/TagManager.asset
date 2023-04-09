@@ -6,6 +6,7 @@ TagManager:
   tags:
   - QuestCoin
   - PatrollPlatform
+  - Enemy
   layers:
   - Default
   - TransparentFX

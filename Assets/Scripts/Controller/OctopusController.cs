@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PlatformerMVC
 {
-    public class OctopusController
+    public class OctopusController : IEnemy
     {
         private AnimationConfig _config;
         private SpriteAnimatorController _octopusAnimator;
