@@ -75,13 +75,13 @@ namespace PlatformerMVC
 
         public void TakeDamage()
         {
-            if (_hurtTime < 0.02f)
-            {
+           // if (_hurtTime < 0.02f)
+           // {
                 _health--;
                 _isHurt = true;
                 _playerUIView._heartImages[_health].SetActive(false);
                 Debug.Log(_health);
-            }
+            //}
 
             //_playerAnimator.StartAnimation(_playerView._spriteRenderer, AnimState.hurt, true, _animationSpeed / 10);
         }
@@ -109,14 +109,14 @@ namespace PlatformerMVC
                     GameOver();
             }
 
-            if (_isHurt) { 
-                _hurtTime += Time.deltaTime;
-                if (_hurtTime - _hurtDelay > 0f)
-                {
-                    _isHurt = false;
-                    _hurtTime = 0f;
-                }
-            }
+            //if (_isHurt) { 
+            //    _hurtTime += Time.deltaTime;
+            //    if (_hurtTime - _hurtDelay > 0f)
+            //    {
+            //        _isHurt = false;
+            //        _hurtTime = 0f;
+            //    }
+            //}
 
             _playerAnimator.Update();
             _contactPooler.Update();

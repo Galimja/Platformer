@@ -19,7 +19,8 @@ namespace PlatformerMVC
         shoot = 9,
         shoot_stand = 10,
         dead = 11,
-        Coin = 12
+        Coin = 12,
+        portal = 13
     }
 
     [CreateAssetMenu(fileName ="SpriteAnimatorCfg", menuName ="Configs / Animation", order = 1)]

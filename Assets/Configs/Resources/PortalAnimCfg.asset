@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e908a35697555443aac0decc5463b50, type: 3}
+  m_Name: PortalAnimCfg
+  m_EditorClassIdentifier: 
+  Sequences:
+  - Track: 13
+    Sprites:
+    - {fileID: 1659372145, guid: ea34135d60b8f1747be6c5f83f58e2b4, type: 3}
+    - {fileID: -879573372, guid: ea34135d60b8f1747be6c5f83f58e2b4, type: 3}
+    - {fileID: 1765979477, guid: ea34135d60b8f1747be6c5f83f58e2b4, type: 3}
+    - {fileID: -1736456313, guid: ea34135d60b8f1747be6c5f83f58e2b4, type: 3}
+    - {fileID: 880153475, guid: ea34135d60b8f1747be6c5f83f58e2b4, type: 3}
+    - {fileID: -1499851705, guid: ea34135d60b8f1747be6c5f83f58e2b4, type: 3}
+    - {fileID: -1854722467, guid: ea34135d60b8f1747be6c5f83f58e2b4, type: 3}
+    - {fileID: -2133838190, guid: ea34135d60b8f1747be6c5f83f58e2b4, type: 3}

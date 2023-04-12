@@ -15,10 +15,12 @@ namespace PlatformerMVC
         [SerializeField] private QuestView _questView;
         [SerializeField] private CoinsCollectView _coinsCollectView;
         [SerializeField] private CaveZoneView _caveZoneView;
+        [SerializeField] private PortalView _portalView;
 
         [SerializeField] private PauseMenuView _pauseMenuView;
         [SerializeField] private PlayerUIView _playerUIView;
         [SerializeField] private GameOverMenuView _gameOverMenuView;
+        [SerializeField] private GameWinMenuView _gameWinMenuView;
         //[SerializeField] private QuestObjectView _singleQuestItemView; 
 
 
@@ -30,6 +32,7 @@ namespace PlatformerMVC
         private QuestConfiguratorController _questConfiguratorController;
         private CoinCollectController _collectController;
         private CaveZoneController _caveZoneController;
+        private PortalController _portalController;
 
         private PauseMenuController _pauseMenuController;
 
@@ -46,6 +49,7 @@ namespace PlatformerMVC
             _emitterController = new EmitterController(_canonView._bullets ,_canonView._emitterT);
             _cameraController = new CameraController(_playerView, _cameraView._transform);
             _pauseMenuController = new PauseMenuController(_pauseMenuView);
+            _portalController = new PortalController(_portalView, _coinsCollectView, _gameWinMenuView);
 
             for (int i = 0; i < _enemiesView.Length; i++)
             {
@@ -78,6 +82,7 @@ namespace PlatformerMVC
             _emitterController.Update();
             _cameraController.Update();
             _collectController.Update();
+            _portalController.Update();
 
             for (int i = 0; i < _octopusController.Count; i++)
             {

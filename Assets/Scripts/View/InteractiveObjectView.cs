@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace PlatformerMVC
 {
+
     public class InteractiveObjectView : LevelObjectView
     {
         public Transform _muzzleT;

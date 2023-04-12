@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace PlatformerMVC
 {
-    public class CoinController : MonoBehaviour
+
+    public class CoinController
     {
         private AnimationConfig _config;
         private SpriteAnimatorController _animController;
