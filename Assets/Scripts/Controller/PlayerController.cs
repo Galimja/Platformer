@@ -37,7 +37,7 @@ namespace PlatformerMVC
         private Vector3 _rightScale = new Vector3(1, 1, 1);
 
        
-        private float _jumpForce = 9f;
+        private float _jumpForce = 7.7f;
         private float _jumpTreshold = 1f;
         
         private float _xAxisInput;
